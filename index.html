@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Passionlife International Marketing Gaya Franchise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    /* ------------------------------------------------------------------- */
+    /* COLOR THEME: BLUE (Header), RED (Footer/Accent), YELLOW (Title), BLUE (Buttons) */
+    /* ------------------------------------------------------------------- */
+    :root{
+        --header-blue:#003366; 
+        --primary-red:#cc0000; 
+        --secondary-red:#ff3333; 
+        --accent-yellow:#ffcc00; 
+        --btn-blue:#1e88ee; 
+        --bg:#f4f4f4; 
+        --card:#ffffff; 
+        --text:#222;
+        --header-text-white: #ffffff; 
+        --invoice-bg: #f9f9f9;
+        --invoice-border: #ddd;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:Arial, sans-serif;background:var(--bg);color:var(--text);}
+    
+    /* ------------------- LOGIN PAGE STYLES ------------------- */
+    #loginPage {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background: var(--header-blue);
+        padding: 20px;
+    }
+    .login-box {
+        background: var(--card);
+        padding: 30px 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        max-width: 350px;
+        width: 100%;
+        text-align: center;
+    }
+    .login-box img {
+        max-width: 120px;
+        margin-bottom: 20px;
+    }
+    .login-box h2 {
+        color: var(--header-blue);
+        margin-bottom: 20px;
+        font-size: 20px;
+    }
+    /* Added Labels for clarity (CSS only for spacing) */
+    .login-box label {
+        display: block;
+        text-align: left;
+        margin-top: 10px;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: var(--header-blue);
+    }
+    .login-box input {
+        margin-bottom: 15px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        width: 100%;
+    }
+    .login-box button {
+        background: var(--primary-red);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+        font-weight: bold;
+    }
+    .login-box p {
+        color: var(--primary-red);
+        margin-top: 10px;
+        font-size: 14px;
+    }
+    
+    /* ------------------- MAIN APP STYLES ------------------- */
+    #mainApp {
+        display: none; /* Hidden until logged in */
+    }
+
+    header{background:var(--header-blue);color:var(--header-text-white);padding:10px 10px 15px;position:relative;}
+    .header-content{display: flex;align-items: center;justify-content: space-between;}
+    .menu-toggle{width:30px;height:30px;cursor:pointer;z-index:20;display: flex;flex-direction: column;justify-content: space-around;padding: 5px 0;}
+    .menu-toggle div{height:3px;background:var(--header-text-white);border-radius: 2px;transition: all 0.3s ease-in-out;transform-origin: left;}
+    .menu-toggle.open .bar1{transform: rotate(45deg);}
+    .menu-toggle.open .bar2{opacity: 0;}
+    .menu-toggle.open .bar3{transform: rotate(-45deg);}
+    .menu{display:none;position:absolute;left:10px;top:50px;background:var(--secondary-red);border-radius:4px;overflow:hidden;z-index:15;min-width:180px;box-shadow:0 2px 5px rgba(0,0,0,0.5);}
+    .menu a{display:block;padding:8px 14px;color:var(--header-text-white);text-decoration:none;font-size:14px;}
+    .menu a:hover{background:#aa0000;}
+    header h1{font-size:16px;color:var(--header-text-white);flex-grow: 1;text-align: right;margin-right: 15px;}
+    header p{text-align:center;font-size:14px;font-weight: bold;color: var(--accent-yellow);margin-top:5px;margin-bottom: 5px;}
+    .logo{max-width:120px;display:block;margin:8px auto 0;}
+    .header-gallery{display: flex;justify-content: center;gap: 15px;margin-top: 10px;margin-bottom: 10px;}
+    .header-gallery img{width: 55px;height: 55px;border-radius: 50%;object-fit: cover;border: 2px solid var(--accent-yellow);box-shadow: 0 0 5px rgba(0,0,0,0.3);}
+
+    .section{display:none;padding:10px;}
+    .active-section{display:block;}
+
+    /* Checkout & Invoice Styles */
+    .checkout-box{max-width:900px;margin:0 auto;background:var(--card);border-radius:10px;padding:12px;box-shadow:0 1px 4px rgba(0,0,0,0.15);font-size:13px;}
+    .order-form-container{display: block;} 
+    .invoice-display-container{display: none; padding: 20px;}
+    
+    .invoice-card {
+        background: var(--invoice-bg);
+        border: 1px solid var(--invoice-border);
+        padding: 15px;
+        margin-top: 10px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        width: 100%;
+    }
+    
+    .invoice-header {
+        text-align: center;
+        border-bottom: 2px solid var(--primary-red);
+        padding-bottom: 8px;
+        margin-bottom: 15px;
+    }
+    .invoice-header img { 
+        max-width: 80px; 
+        height: auto;
+        margin-bottom: 5px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .invoice-header h3 {
+        color: var(--header-blue);
+        font-size: 16px;
+        margin-bottom: 3px;
+    }
+    
+    .invoice-details, .invoice-totals {width: 100%;font-size: 12px;margin-bottom: 15px;}
+    .invoice-details table, .invoice-totals table {width: 100%;border-collapse: collapse;}
+    .invoice-details td:first-child, .invoice-totals td:first-child {font-weight: bold;padding-right: 10px;width: 40%;}
+    .invoice-details td, .invoice-totals td {padding: 4px 0;vertical-align: top;}
+    .invoice-item-table th, .invoice-item-table td {border: 1px solid var(--invoice-border);padding: 6px;text-align: center;font-size: 11px;}
+    .invoice-item-table th {background: var(--header-blue);color: white;}
+    .invoice-totals .total-row td {font-weight: bold;background: #ffe0e0;color: var(--primary-red);}
+    .thank-you-note {text-align: center;margin-top: 20px;padding: 10px;border-top: 1px dashed var(--header-blue);color: var(--primary-red);font-weight: bold;}
+    
+    /* Involvement History Styles (Retained) */
+    .history-lock {
+        padding: 20px;
+        text-align: center;
+        border: 1px solid #ffcc00;
+        background: #fff8e1; 
+        border-radius: 8px;
+        margin-top: 10px;
+    }
+    .history-lock h4 {
+        color: var(--primary-red);
+        margin-bottom: 10px;
+    }
+    .history-lock input {
+        width: 80%;
+        max-width: 250px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+    .history-list-container {
+        display: none; 
+        margin-top: 15px;
+    }
+    #historyList {
+        list-style: none;
+        padding: 0;
+    }
+    .history-item {
+        background: var(--card);
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        margin-bottom: 10px;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .history-info {
+        flex-grow: 1;
+        font-size: 13px;
+    }
+    .history-info strong {
+        display: block;
+        font-size: 14px;
+        color: var(--header-blue);
+    }
+    .history-info span {
+        font-size: 11px;
+        color: #666;
+    }
+    .history-actions button {
+        background: var(--primary-red);
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+        margin-left: 10px;
+    }
+
+
+    /* Rest of the styles are for layout and retained */
+    .products{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;padding-top:10px;}
+    .product-card{width:170px;background:var(--card);border: 1px solid #ddd;border-radius:8px;padding:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);text-align:center;font-size:13px;}
+    .product-card img{width:100%;height:120px;object-fit:contain;border-radius:6px;margin-bottom:5px;}
+    .product-card h3{font-size:14px;margin-bottom:4px; height: 35px; overflow: hidden;}
+    .product-card p{margin:2px 0;}
+    .price-label{font-weight:bold;color:var(--primary-red);} 
+    .btn{border:none;padding:6px;border-radius:4px;cursor:pointer;font-size:13px;width:100%;color:#fff;margin-top:5px;background:var(--btn-blue);} 
+
+    .checkout-grid{display:flex;flex-direction:column;gap:10px;}
+    @media(min-width:768px){.checkout-grid{flex-direction:row;}.checkout-left{flex:1.4;}.checkout-right{flex:1;}}
+    label{font-size:12px;margin-top:4px;display:block;}
+    input, select, textarea{width:100%;padding:6px;margin-top:2px;border-radius:4px;border:1px solid #ccc;font-size:13px;}
+    input[type="number"] {text-align: center;}
+    textarea{min-height:60px;resize:vertical;}
+    .qr-code{text-align: center; margin-top: 15px;}
+    .qr-code img {max-width: 150px; border: 1px solid #ccc; padding: 5px;}
+    .full-logo-container{text-align: center;padding: 20px 10px;background: var(--card);border-radius: 8px;box-shadow: 0 1px 4px rgba(0,0,0,0.15);}
+    .full-logo-container img{max-width: 90%;height: auto;border: 1px solid #ccc;border-radius: 5px;}
+</style>
+</head>
+<body>
+
+<div id="loginPage">
+    <div class="login-box">
+        <img src="images/logo.jpg" alt="Passionlife Logo">
+        <h2>Franchise Login</h2>
+        
+        <label for="loginId">Login ID</label>
+        <input type="text" id="loginId">
+        
+        <label for="loginPassword">Login Password</label>
+        <input type="password" id="loginPassword">
+        <button onclick="checkLogin()">LOGIN</button>
+        <p id="loginError" style="display:none; color: var(--primary-red);">Invalid ID or Password.</p>
+    </div>
+</div>
+
+<div id="mainApp">
+    <header>
+        <div class="header-content">
+            <div class="menu-toggle" id="menuToggle" onclick="toggleMenu()">
+                <div class="bar1"></div>
+                <div class="bar2"></div>
+                <div class="bar3"></div>
+            </div>
+            
+            <h1>Passionlife International Marketing Pvt. Ltd.</h1>
+        </div>
+
+        <div class="menu" id="mainMenu">
+            <a href="#" onclick="showSection('dashboardSection')">Dashboard</a>
+            <a href="#" onclick="showSection('productsSection')">Products</a>
+            <a href="#" onclick="showSection('checkoutSection'); hideInvoice();">Checkout</a>
+            <a href="#" onclick="showHistorySection()">Involvement History</a>
+            <a href="#" onclick="showSection('helpSection')">Help &amp; Contact</a>
+            <a href="#" onclick="logout()">Logout</a>
+        </div>
+        
+        <p>Gaya Franchise | OWNER: MD RIZWAN SIR</p>
+
+        <img src="images/logo.jpg" class="logo" alt="Main Logo">
+
+        
+        <div class="header-gallery">
+            <img src="images/company1.jpg" alt="Company Logo 1">
+            <img src="images/company2.jpg" alt="Company Logo 2">
+            <img src="images/company3.jpg" alt="Company Logo 3">
+        </div>
+    </header>
+
+    <section id="dashboardSection" class="section active-section">
+        <div class="full-logo-container">
+            <h2>Welcome to Passionlife International Marketing</h2>
+            <p style="margin-bottom: 15px; color: var(--primary-red);">Owner: Md Rizwan Sir</p>
+            <img src="images/passionlife_logo_fullscreen.png" alt="Passionlife Logo Full Screen">
+        </div>
+    </section>
+
+    <section id="productsSection" class="section">
+        <div class="products" id="productList">
+            </div>
+    </section>
+
+    <section id="checkoutSection" class="section">
+        <div class="checkout-box">
+            
+            <div id="orderFormContainer" class="order-form-container">
+                <h2>Checkout</h2>
+                <div class="checkout-grid">
+                    <div class="checkout-left">
+                        <h3>Order & ID Details</h3>
+                        <label>Passionlife ID (6 digit)</label>
+                        <input type="text" id="plId" maxlength="6" placeholder="ex: 123456" required>
+
+                        <label>ID Ka Password (1–10 digit)</label>
+                        <input type="password" id="plPassword" maxlength="10" placeholder="Min 1 digit, Max 10 digit">
+
+                        <label>Customer Name</label>
+                        <input type="text" id="customerName" required>
+
+                        <label>ID Type</label>
+                        <select id="idType">
+                            <option value="ID Green">ID Green</option>
+                            <option value="Repurchase">Repurchase</option>
+                        </select>
+
+                        <label>Date &amp; Time (Indian)</label>
+                        <input type="datetime-local" id="orderDateTime"> 
+                        
+                        <label>Note / Full Address (Must)</label>
+                        <textarea id="orderNote" placeholder="Address, city, pin, extra note" required></textarea>
+                    </div>
+
+                    <div class="checkout-right">
+                        <h3>Payment & UTR Details</h3>
+                        <div class="qr-code">
+                            <img src="images/qr-code.png" alt="Payment QR Code">
+                            <p>UPI se pay karein. **Payment Amount Total DP Amount jitna hona chahiye.**</p>
+                        </div>
+                        
+                        <label>UTR ID (12 digit)</label>
+                        <input type="text" id="utrId" maxlength="12" placeholder="12 digit UTR" required>
+
+                        <label>Upload Payment Screenshot (For History Record)</label>
+                        <input type="file" id="paymentScreenshot" accept="image/*">
+                        <p style="font-size: 10px; color: var(--primary-red); margin-top: 3px; font-weight: bold;">
+                            ⚠️ FILE NOTE: Yeh file **server par save nahi ho rahi** aur WhatsApp message ke saath **automatically nahi jaaega**. Kripya Order Place karne ke baad, **screenshot alag se WhatsApp par bhej dein.**
+                        </p>
+                        
+                        <h3>Cart Products</h3>
+                        <table id="cartTable">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>DP</th>
+                                    <th>Qty</th>
+                                    <th>BV</th>
+                                    <th>RBV</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                </tbody>
+                            <tfoot>
+                                <tr class="total-row">
+                                    <td colspan="2">Total</td>
+                                    <td id="totalQty">0</td>
+                                    <td id="totalBV">0</td>
+                                    <td id="totalRBV">0</td>
+                                    <td id="totalAmount">₹0</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                        <div class="whatsapp-link">
+                            <button class="btn" onclick="placeOrder()">Generate Bill &amp; Save History</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="invoiceDisplayContainer" class="invoice-display-container">
+                <div id="invoiceCard" class="invoice-card">
+                    <div class="invoice-header">
+                        <img id="invLogo" src="images/logo.jpg" alt="Passionlife Logo" /> <h3>TAX INVOICE / CASH MEMO</h3>
+                        <p style="font-size: 10px; color: var(--text); margin: 0;">Passionlife International Marketing Pvt. Ltd. | Gaya Franchise</p>
+                        <p style="font-size: 11px; color: var(--primary-red); font-weight: bold; margin: 2px 0;">Owner: Md Rizwan Sir</p>
+                    </div>
+
+                    <div class="invoice-details">
+                        <table>
+                            <tr><td>Order ID / Time:</td><td id="invOrderTime"></td></tr>
+                            <tr><td>Customer Name:</td><td id="invCustomerName"></td></tr>
+                            <tr><td>Passionlife ID:</td><td id="invPlId"></td></tr>
+                            <tr><td>ID Type:</td><td id="invIdType"></td></tr>
+                            <tr><td>UTR / Payment ID:</td><td id="invUtrId"></td></tr>
+                            <tr><td>Address:</td><td id="invAddress"></td></tr>
+                            <tr id="invScreenshotRow"><td>Payment Screenshot Status:</td><td id="invScreenshotStatus" style="color: var(--primary-red); font-weight: bold;"></td></tr>
+                        </table>
+                    </div>
+
+                    <table class="invoice-item-table">
+                        <thead>
+                            <tr>
+                                <th>S.No.</th>
+                                <th>Product Name</th>
+                                <th>Qty</th>
+                                <th>DP/Unit</th>
+                                <th>Total DP</th>
+                                <th>BV</th>
+                                <th>RBV</th>
+                            </tr>
+                        </thead>
+                        <tbody id="invItemBody">
+                            </tbody>
+                    </table>
+                    
+                    <div class="invoice-totals">
+                        <table>
+                            <tr><td>Total Qty:</td><td id="invTotalQty">0</td></tr>
+                            <tr><td>Total BV:</td><td id="invTotalBV">0</td></tr>
+                            <tr><td>Total RBV:</td><td id="invTotalRBV">0</td></tr>
+                            <tr class="total-row"><td>FINAL DP AMOUNT:</td><td id="invTotalAmount">₹0</td></tr>
+                        </table>
+                    </div>
+
+                    <div class="thank-you-note">
+                        <p>Bill Record Saved Locally. Agar aap abhi order bhej rahe hain, toh kripya is bill ka screenshot lein.</p>
+                    </div>
+                </div>
+                <button class="btn" onclick="continueToWhatsApp()" style="margin-top: 15px; background: var(--btn-blue);" id="whatsappButton">Continue to WhatsApp</button>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="historySection" class="section">
+        <div class="checkout-box">
+            <h2>Involvement History (Local Storage)</h2>
+            <p style="color: var(--primary-red); font-weight: bold; margin-bottom: 10px;">
+                ⚠️ Dhyan Dein: Yeh record sirf isi browser mein save hai.
+            </p>
+
+            <div id="historyLogin" class="history-lock">
+                <h4>🔐 Access Restricted: Owner Login Required</h4>
+                <input type="password" id="historyPassword" placeholder="Enter Password">
+                <button class="btn" style="background: var(--header-blue); width: auto; padding: 6px 20px;" onclick="checkHistoryPassword()">Unlock History</button>
+                <p id="passwordError" style="color: var(--primary-red); font-size: 12px; margin-top: 5px; display: none;">Invalid Password!</p>
+            </div>
+            
+            <div id="historyListContainer" class="history-list-container">
+                <ul id="historyList">
+                    <li style="text-align: center; color: #666;">No orders found in local history.</li>
+                </ul>
+                <button class="btn" style="background: var(--primary-red); margin-top: 15px;" onclick="clearHistory()">Clear All Local History</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="helpSection" class="section">
+        <div class="checkout-box">
+            <h2>Help &amp; Contact</h2>
+            <p>Kisi bhi help, payment issue ya product information ke liye contact karein:</p>
+            <div class="help-contact-list">
+                <p><strong>WhatsApp 1 (Md Rizwan Sir):</strong> <a href="https://wa.me/9509751095">9509751095</a></p> 
+                <p><strong>WhatsApp 2 (Assistance):</strong> <a href="https://wa.me/9931549836">9931549836</a></p>
+                <p><strong>WhatsApp 3 (Technical Support):</strong> <a href="https://wa.me/7367857388">7367857388</a></p>
+                <p><strong>Email:</strong> mdayan8541@gmail.com</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        Passionlife International Marketing Gaya Franchise | Owner: Md Rizwan Sir
+    </footer>
+</div>
+
+<script>
+    // -------------------------------------------------------------------
+    // CONFIGURATION AND DATA
+    // -------------------------------------------------------------------
+    const LOGIN_ID = "Gaya";
+    const LOGIN_PASS = "123";
+    const HISTORY_PASSWORD = "Md Rizwan Sir"; 
+    const WHATSAPP_NUMBER = "9931549836"; // Main WhatsApp number for orders
+
+    const allProducts = [
+        // Product Data (Corrected based on previous request images)
+        { id: 1, name: "Aloevera Face Wash", mrp: 399, dp: 300, bv: 2, rbv: 1, image: "images/01_aloevera_facewash.jpg" },
+        { id: 2, name: "Heart Care Juice", mrp: 1499, dp: 1399, bv: 10, rbv: 5, image: "images/02_heart_care_juice.jpg" },
+        { id: 3, name: "Aloevera Juice", mrp: 999, dp: 900, bv: 7, rbv: 4, image: "images/03_aloevera_juice.jpg" },
+        { id: 4, name: "Kids Care Juice", mrp: 1499, dp: 1399, bv: 10, rbv: 5, image: "images/04_kids_care_juice.jpg" },
+        { id: 5, name: "Anti Xiety Drop", mrp: 1499, dp: 1399, bv: 10, rbv: 5, image: "images/05_anti_xiety_drop.jpg" },
+        { id: 6, name: "Light Onion Colour Suite Lenth", mrp: 5599, dp: 4599, bv: 33, rbv: 15, image: "images/06_onion_colour_suite.jpg" },
+        { id: 7, name: "Bio magnetic Bracelet (Jents)", mrp: 4999, dp: 3999, bv: 32, rbv: 15, image: "images/07_bracelet_jents.jpg" },
+        { id: 8, name: "Liver Care Juice", mrp: 550, dp: 500, bv: 3.5, rbv: 2, image: "images/08_liver_care_juice.jpg" },
+        { id: 9, name: "Bio magnetic Bracelet (ladies)", mrp: 4999, dp: 3999, bv: 32, rbv: 15, image: "images/09_bracelet_ladies.jpg" },
+        { id: 10, name: "Moringa powder", mrp: 1499, dp: 1399, bv: 10, rbv: 5, image: "images/10_moringa_powder.jpg" },
+        { id: 11, name: "Body Lotion", mrp: 450, dp: 300, bv: 2, rbv: 1, image: "images/11_body_lotion.jpg" },
+        { id: 12, name: "Multiberry Juice", mrp: 1999, dp: 1699, bv: 11, rbv: 6, image: "images/12_multiberry_juice.jpg" },
+        { id: 13, name: "Calcium Capsule", mrp: 1199, dp: 999, bv: 7, rbv: 4, image: "images/13_calcium_capsule.jpg" },
+        { id: 14, name: "Noni Gold Juice", mrp: 1499, dp: 1399, bv: 10, rbv: 5, image: "images/14_noni_gold_juice.jpg" },
+        { id: 15, name: "Combo-01", mrp: 14796, dp: 12999, bv: 100, rbv: 45, image: "images/15_combo_01.jpg" },
+        { id: 16, name: "Onion Herbal Hair Shampoo", mrp: 500, dp: 300, bv: 2, rbv: 1, image: "images/16_onion_shampoo.jpg" },
+        { id: 17, name: "Cough Care Juice", mrp: 270, dp: 250, bv: 1.5, rbv: 1, image: "images/17_cough_care_juice.jpg" },
+        { id: 18, name: "Pea Cook Colour", mrp: 5599, dp: 4499, bv: 33, rbv: 15, image: "images/18_pea_cook_colour.jpg" },
+        { id: 19, name: "Diabetic Juice", mrp: 1499, dp: 1399, bv: 10, rbv: 5, image: "images/19_diabetic_juice.jpg" },
+        { id: 20, name: "Piles Care Juice", mrp: 1499, dp: 1399, bv: 10, rbv: 5, image: "images/20_piles_care_juice.jpg" },
+        { id: 21, name: "Diabetic Powder", mrp: 1499, dp: 1399, bv: 10, rbv: 5, image: "images/21_diabetic_powder.jpg" },
+        { id: 22, name: "Rosemary Hair Oil", mrp: 299, dp: 250, bv: 1.5, rbv: 1, image: "images/22_rosemary_oil.jpg" },
+        { id: 23, name: "Energex Juice", mrp: 1799, dp: 1699, bv: 13, rbv: 7, image: "images/23_energex_juice.jpg" },
+        { id: 24, name: "Sea Buckthorn Juice", mrp: 1799, dp: 1599, bv: 11, rbv: 6, image: "images/24_sea_buckthorn_juice.jpg" },
+        { id: 25, name: "Energex Powder", mrp: 1999, dp: 1699, bv: 12, rbv: 6, image: "images/25_energex_powder.jpg" },
+        { id: 26, name: "Stone Care Juice", mrp: 1499, dp: 1399, bv: 10, rbv: 5, image: "images/26_stone_care_juice.jpg" },
+        { id: 27, name: "Energy Booster", mrp: 1199, dp: 999, bv: 7, rbv: 4, image: "images/27_energy_booster.jpg" },
+        { id: 28, name: "Thyroid Juice", mrp: 799, dp: 750, bv: 6, rbv: 3, image: "images/28_thyroid_juice.jpg" },
+        { id: 29, name: "Facial Scrub", mrp: 699, dp: 550, bv: 3.5, rbv: 2, image: "images/29_facial_scrub.jpg" },
+        { id: 30, name: "Tulsi Black Pepper Clove Drop", mrp: 599, dp: 399, bv: 2, rbv: 1, image: "images/30_tulsi_drop.jpg" },
+        { id: 31, name: "Female Tonic Juice", mrp: 1199, dp: 999, bv: 7, rbv: 4, image: "images/31_female_tonic_juice.jpg" },
+        { id: 32, name: "Udar Amrit Juice", mrp: 350, dp: 300, bv: 2, rbv: 1, image: "images/32_udar_amrit_juice.jpg" },
+        { id: 33, name: "Forest Green Colour", mrp: 5599, dp: 4599, bv: 33, rbv: 15, image: "images/33_forest_green_colour.jpg" },
+        { id: 34, name: "Vitamin C Face Wash", mrp: 350, dp: 300, bv: 2, rbv: 1, image: "images/34_vitamin_c_facewash.jpg" },
+        { id: 35, name: "Ortho Care Juice", mrp: 1499, dp: 1399, bv: 10, rbv: 5, image: "images/35_generic_A.jpg" },
+        { id: 36, name: "Combo-2", mrp: 13697, dp: 12499, bv: 100, rbv: 45, image: "images/36_generic_B.jpg" }
+    ];
+
+    let cart = {}; 
+    let orderDetails = {}; 
+
+    // -------------------------------------------------------------------
+    // 1. LOGIN SYSTEM FUNCTIONS
+    // -------------------------------------------------------------------
+    function checkLogin() {
+        const id = document.getElementById('loginId').value.trim();
+        const pass = document.getElementById('loginPassword').value.trim();
+        const error = document.getElementById('loginError');
+
+        if (id === LOGIN_ID && pass === LOGIN_PASS) {
+            localStorage.setItem('isLoggedIn', 'true');
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('mainApp').style.display = 'block';
+            error.style.display = 'none';
+            renderProducts();
+            setDefaultDateTime(); 
+        } else {
+            error.style.display = 'block';
+        }
+    }
+
+    function logout() {
+        if (confirm("Are you sure you want to log out?")) {
+            localStorage.removeItem('isLoggedIn');
+            document.getElementById('mainApp').style.display = 'none';
+            document.getElementById('loginPage').style.display = 'flex';
+            document.getElementById('loginId').value = '';
+            document.getElementById('loginPassword').value = '';
+            document.getElementById('loginError').style.display = 'none';
+            cart = {};
+            orderDetails = {};
+        }
+    }
+
+    function checkLoginStatus() {
+        if (localStorage.getItem('isLoggedIn') === 'true') {
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('mainApp').style.display = 'block';
+            renderProducts();
+            setDefaultDateTime();
+        } else {
+            document.getElementById('loginPage').style.display = 'flex';
+            document.getElementById('mainApp').style.display = 'none';
+        }
+    }
+    
+    // -------------------------------------------------------------------
+    // 2. CORE APP FUNCTIONS
+    // -------------------------------------------------------------------
+    
+    function setDefaultDateTime() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        
+        const formattedDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
+        document.getElementById('orderDateTime').value = formattedDateTime;
+    }
+
+    function toggleMenu(){
+        const menu = document.getElementById('mainMenu');
+        const toggle = document.getElementById('menuToggle');
+        
+        if (menu.style.display === 'block') {
+            menu.style.display = 'none';
+            toggle.classList.remove('open');
+        } else {
+            menu.style.display = 'block';
+            toggle.classList.add('open');
+        }
+    }
+    
+    function showSection(id){
+        document.querySelectorAll('.section').forEach(s=>s.classList.remove('active-section'));
+        document.getElementById(id).classList.add('active-section');
+        document.getElementById('mainMenu').style.display='none';
+        document.getElementById('menuToggle').classList.remove('open');
+        if (id === 'checkoutSection') {
+            setDefaultDateTime();
+        }
+    }
+
+    function hideInvoice() {
+        document.getElementById('orderFormContainer').style.display = 'block';
+        document.getElementById('invoiceDisplayContainer').style.display = 'none';
+    }
+
+    function renderProducts() {
+        const productListContainer = document.getElementById('productList');
+        productListContainer.innerHTML = ''; 
+        allProducts.forEach(p => {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.dataset.id = p.id;
+            card.innerHTML = `
+                <img src="${p.image}" alt="${p.name}">
+                <h3>${p.name}</h3>
+                <p class="price-label">MRP: ₹${p.mrp}</p>
+                <p>DP: ₹${p.dp}</p>
+                <p>BV: ${p.bv} | RBV: ${p.rbv}</p>
+                <button class="btn" onclick="addToCart(${p.id})">Add to Cart</button>
+            `;
+            productListContainer.appendChild(card);
+        });
+    }
+
+    function addToCart(id){
+        const product = allProducts.find(p => p.id === id); 
+        if (!product) return; 
+        const { name, dp, bv, rbv } = product; 
+
+        if(!cart[id]){
+            cart[id] = {name, dp, bv, rbv, qty:1};
+        }else{
+            if(cart[id].qty < 100) cart[id].qty++;
+        }
+        updateCartTable();
+        showSection('checkoutSection');
+        hideInvoice();
+    }
+    
+    function removeItem(id) {
+        delete cart[id];
+        updateCartTable();
+    }
+
+    function updateCartTable(){
+        const tbody = document.querySelector('#cartTable tbody');
+        tbody.innerHTML = '';
+        let tQty=0, tBV=0, tRBV=0, tAmt=0;
+        const cartKeys = Object.keys(cart).sort((a, b) => parseInt(a) - parseInt(b));
+
+        cartKeys.forEach(id=>{
+            const item = cart[id];
+            if (item.qty <= 0) {
+                removeItem(id);
+                return;
+            }
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${item.name} <button onclick="removeItem(${id})" style="background: none; border: none; color: var(--primary-red); cursor: pointer; font-size: 10px; margin-left: 5px;">[X]</button></td>
+                <td>₹${item.dp}</td>
+                <td><input type="number" min="0" max="100" value="${item.qty}" style="width:50px" onchange="
+                    let q = parseInt(this.value)||0;
+                    if(q < 0) q = 0;
+                    if(q > 100) q = 100;
+                    cart[${id}].qty=q;
+                    updateCartTable();
+                "></td>
+                <td>${item.bv * item.qty}</td>
+                <td>${item.rbv * item.qty}</td>
+                <td>₹${item.dp * item.qty}</td>
+            `;
+            tbody.appendChild(row);
+
+            tQty += item.qty;
+            tBV  += item.bv * item.qty;
+            tRBV += item.rbv * item.qty;
+            tAmt += item.dp * item.qty;
+        });
+
+        document.getElementById('totalQty').textContent = tQty;
+        document.getElementById('totalBV').textContent = tBV;
+        document.getElementById('totalRBV').textContent = tRBV;
+        document.getElementById('totalAmount').textContent = '₹'+tAmt;
+    }
+    
+    function generateInvoice(data, isHistory = false) {
+        document.getElementById('orderFormContainer').style.display = 'none';
+        document.getElementById('invoiceDisplayContainer').style.display = 'block';
+
+        const cartData = isHistory ? data.cart : cart;
+
+        const displayDate = data.date 
+            ? new Date(data.date).toLocaleString('en-IN') 
+            : (data.dt ? new Date(data.dt).toLocaleString('en-IN') : (new Date()).toLocaleString('en-IN'));
+
+        document.getElementById('invOrderTime').textContent = displayDate;
+        document.getElementById('invCustomerName').textContent = data.name;
+        document.getElementById('invPlId').textContent = data.plId + ' (' + data.idType + ')';
+        document.getElementById('invIdType').textContent = data.idType;
+        document.getElementById('invUtrId').textContent = data.utr;
+        document.getElementById('invAddress').textContent = data.note;
+        
+        const ssStatus = data.screenshotName ? data.screenshotName + ' (Not Stored)' : 'N/A';
+        document.getElementById('invScreenshotStatus').textContent = ssStatus;
+
+        document.getElementById('invTotalQty').textContent = data.tQty;
+        document.getElementById('invTotalBV').textContent = data.tBV;
+        document.getElementById('invTotalRBV').textContent = data.tRBV;
+        document.getElementById('invTotalAmount').textContent = '₹' + data.tAmt;
+
+        const itemBody = document.getElementById('invItemBody');
+        itemBody.innerHTML = '';
+        let sno = 1;
+        Object.keys(cartData).forEach(id => {
+            const item = cartData[id];
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${sno++}</td>
+                <td style="text-align: left;">${item.name}</td>
+                <td>${item.qty}</td>
+                <td>₹${item.dp}</td>
+                <td>₹${item.dp * item.qty}</td>
+                <td>${item.bv * item.qty}</td>
+                <td>${item.rbv * item.qty}</td>
+            `;
+            itemBody.appendChild(row);
+        });
+        
+        document.getElementById('whatsappButton').style.display = isHistory ? 'none' : 'block';
+
+        if (!isHistory) {
+             alert('SUCCESS! Bill Generated. Kripya is bill ka screenshot lein aur "Continue to WhatsApp" button dabayein.');
+        } else {
+             window.scrollTo(0, 0); 
+        }
+    }
+    
+    function placeOrder(){
+        const name = document.getElementById('customerName').value.trim();
+        const plId = document.getElementById('plId').value.trim();
+        const pass = document.getElementById('plPassword').value.trim();
+        const utr  = document.getElementById('utrId').value.trim();
+        const idType = document.getElementById('idType').value;
+        const dt   = document.getElementById('orderDateTime').value; 
+        const note = document.getElementById('orderNote').value.trim();
+        const screenshotFile = document.getElementById('paymentScreenshot').files[0];
+        
+        const tQty = parseInt(document.getElementById('totalQty').textContent);
+        const tBV = parseInt(document.getElementById('totalBV').textContent);
+        const tRBV = parseInt(document.getElementById('totalRBV').textContent);
+        const tAmt = parseInt(document.getElementById('totalAmount').textContent.replace('₹', ''));
+        
+        // Basic Validation
+        if(!name || !plId || !utr || !note || !dt){
+            alert('Customer Name, Passionlife ID, UTR ID, Full Address/Note aur Date/Time zaroori hai.');
+            return;
+        }
+        if(plId.length!==6){
+            alert('Passionlife ID 6 digit ka hona chahiye.');
+            return;
+        }
+        if(utr.length!==12){
+            alert('UTR ID 12 digit ka hona chahiye.');
+            return;
+        }
+        if(Object.keys(cart).length===0 || tAmt === 0){
+            alert('Cart khali hai. Kripya Products section se items add karein.');
+            return;
+        }
+
+        // Store details globally and prepare for history save
+        const currentOrder = {
+            id: 'ORD-' + Date.now(), 
+            date: new Date().toISOString(), 
+            dt, 
+            name, plId, pass, utr, idType, note, tQty, tBV, tRBV, tAmt,
+            cart: JSON.parse(JSON.stringify(cart)), 
+            screenshotName: screenshotFile ? screenshotFile.name : null
+        };
+        orderDetails = currentOrder;
+        
+        // 1. Save to Local Storage (History)
+        saveOrderToHistory(currentOrder);
+        
+        // 2. Generate Invoice (Display HTML)
+        generateInvoice(currentOrder, false);
+
+        // 3. IMPORTANT: Clear the current cart after successful order placement
+        cart = {};
+        updateCartTable();
+    }
+    
+    function continueToWhatsApp(){
+        if (!orderDetails.name) {
+            alert('Pehle bill generate karein.');
+            return;
+        }
+        
+        const orderDt = orderDetails.dt;
+        const formattedDate = orderDt.split('T')[0]; 
+        const formattedTime = orderDt.split('T')[1]; 
+        
+        // 3. WhatsApp Message Construction 
+        let msg = '*NEW ORDER (Bill Screenshot Sent Separately)*%0A%0A';
+        msg += '*ORDER DATE/TIME*: '+formattedDate+' @ '+formattedTime+'%0A'; 
+        msg += '----------------------%0A';
+        msg += '*CUSTOMER DETAILS*%0A';
+        msg += 'Customer: '+encodeURIComponent(orderDetails.name)+'%0A';
+        msg += 'ID: '+encodeURIComponent(orderDetails.plId)+' ('+encodeURIComponent(orderDetails.idType)+')%0A';
+        msg += 'Pass: '+encodeURIComponent(orderDetails.pass)+'%0A'; 
+        msg += 'UTR ID: *'+encodeURIComponent(orderDetails.utr)+'*%0A';
+        msg += 'Total DP Amt: *₹'+orderDetails.tAmt+'*%0A';
+        msg += 'Total BV: *'+orderDetails.tBV+'*%0A'; 
+        msg += 'Address: '+encodeURIComponent(orderDetails.note)+'%0A%0A';
+
+        msg += '*ORDER ITEMS SUMMARY*%0A';
+        Object.values(orderDetails.cart).forEach(it=>{
+            msg += `- ${encodeURIComponent(it.name)} x ${it.qty}%0A`;
+        });
+        
+        msg += '%0A*_URGENT: Bill/Invoice ka screenshot aur Payment proof ki image abhi bhej dein._*';
+
+
+        const waUrl = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + msg;
+        
+        window.open(waUrl,'_blank');
+    }
+
+    // -------------------------------------------------------------------
+    // 3. HISTORY FUNCTIONS (Local Storage & Password)
+    // -------------------------------------------------------------------
+    
+    function showHistorySection() {
+        showSection('historySection');
+        document.getElementById('historyLogin').style.display = 'block';
+        document.getElementById('historyListContainer').style.display = 'none';
+        document.getElementById('passwordError').style.display = 'none';
+        document.getElementById('historyPassword').value = '';
+    }
+
+    function checkHistoryPassword() {
+        const enteredPassword = document.getElementById('historyPassword').value.trim();
+        const errorMsg = document.getElementById('passwordError');
+
+        if (enteredPassword === HISTORY_PASSWORD) {
+            document.getElementById('historyLogin').style.display = 'none';
+            document.getElementById('historyListContainer').style.display = 'block';
+            errorMsg.style.display = 'none';
+            loadHistory();
+        } else {
+            errorMsg.style.display = 'block';
+            errorMsg.textContent = 'Invalid Password! Please try again.';
+        }
+    }
+    
+    function getHistory() {
+        try {
+            const history = localStorage.getItem('passionlifeOrders');
+            return history ? JSON.parse(history) : [];
+        } catch (e) {
+            console.error("Could not load history from localStorage", e);
+            return [];
+        }
+    }
+    
+    function saveOrderToHistory(order) {
+        const history = getHistory();
+        history.unshift(order); 
+        try {
+            localStorage.setItem('passionlifeOrders', JSON.stringify(history));
+            console.log("Order saved to local history:", order.id);
+        } catch (e) {
+            alert("Local storage full or inaccessible. History could not be saved.");
+            console.error("Could not save history to localStorage", e);
+        }
+    }
+    
+    function loadHistory() {
+        hideInvoice(); 
+        const history = getHistory();
+        const list = document.getElementById('historyList');
+        list.innerHTML = '';
+
+        if (history.length === 0) {
+            list.innerHTML = '<li style="text-align: center; color: #666; padding: 10px;">No orders found in local history.</li>';
+            return;
+        }
+
+        history.forEach(order => {
+            const listItem = document.createElement('li');
+            listItem.className = 'history-item';
+            
+            const dateStr = new Date(order.date).toLocaleDateString('en-IN', {
+                year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+            });
+
+            listItem.innerHTML = `
+                <div class="history-info">
+                    <strong>Order ID: ${order.id}</strong>
+                    <span>Date: ${dateStr}</span>
+                    <span>Customer: ${order.name} | Total: ₹${order.tAmt}</span>
+                </div>
+                <div class="history-actions">
+                    <button onclick="viewPastOrder('${order.id}')">View Bill</button>
+                </div>
+            `;
+            list.appendChild(listItem);
+        });
+    }
+
+    function viewPastOrder(id) {
+        showSection('historySection'); 
+        document.getElementById('historyLogin').style.display = 'none'; 
+        document.getElementById('historyListContainer').style.display = 'block'; 
+
+        const history = getHistory();
+        const order = history.find(o => o.id === id);
+        
+        if (order) {
+            generateInvoice(order, true);
+        } else {
+            alert('Order not found in history.');
+        }
+    }
+    
+    function clearHistory() {
+        if (confirm('Are you sure you want to delete ALL local order history? This action cannot be undone.')) {
+            localStorage.removeItem('passionlifeOrders');
+            loadHistory();
+            alert('Local history deleted.');
+        }
+    }
+
+    // Initialize the application
+    document.addEventListener('DOMContentLoaded', checkLoginStatus);
+</script>
+</body>
+</html>
